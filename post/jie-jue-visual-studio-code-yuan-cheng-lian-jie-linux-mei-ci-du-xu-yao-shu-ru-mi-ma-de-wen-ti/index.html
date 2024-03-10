@@ -1,0 +1,172 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>解决visual studio code远程连接Linux每次都需要输入密码的问题 | TAOTE的个人博客</title>
+<link rel="shortcut icon" href="https://gyafen.github.io/favicon.ico?v=1710044569032">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://gyafen.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="解决visual studio code远程连接Linux每次都需要输入密码的问题 | TAOTE的个人博客 - Atom Feed" href="https://gyafen.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="首先在本地运行命令：
+$ ssh-keygen -t rsa -b 4096
+
+一路回车，终端会提示你生成了一个名为id_rsa.pub的文件：
+
+在Linux端创建文件夹~/.ssh/，然后将本地生成的id_rsa.pub文件上传至Lin..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://gyafen.github.io">
+  <img class="avatar" src="https://gyafen.github.io/images/avatar.png?v=1710044569032" alt="">
+  </a>
+  <h1 class="site-title">
+    TAOTE的个人博客
+  </h1>
+  <p class="site-description">
+    直到天主垂允为人类揭示未来图景的那一天到来之前，人类的全部智慧就包含在这五个字里面：等待和希望！
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              解决visual studio code远程连接Linux每次都需要输入密码的问题
+            </h2>
+            <div class="post-info">
+              <span>
+                2024-03-10
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>首先在本地运行命令：</p>
+<pre><code class="language-shell">$ ssh-keygen -t rsa -b 4096
+</code></pre>
+<p>一路回车，终端会提示你生成了一个名为<code>id_rsa.pub</code>的文件：</p>
+<figure data-type="image" tabindex="1"><img src="https://gyafen.github.io/post-images/1710044386198.jpg" alt="" loading="lazy"></figure>
+<p>在Linux端创建文件夹<code>~/.ssh/</code>，然后将本地生成的id_rsa.pub文件上传至Linux端，保存至<code>~/.ssh/</code>文件夹，在<code>~/.ssh/</code>文件夹下打开终端，运行命令：</p>
+<pre><code class="language-shell">$ cat id_rsa.pub &gt;&gt; authorized_keys
+</code></pre>
+<p>再次在本地vs code中连接这台Linux，就无须输入密码了。</p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://gyafen.github.io/post/cmake-jiao-cheng/">
+              <h3 class="post-title">
+                cmake教程
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://gyafen.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
